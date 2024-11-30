@@ -16,17 +16,17 @@ async function findById(id) {
   }
 }
 
-async function create({ titulo, descricao, dataCadastro, telefone, status, empresa }) {
+async function create({ titulo, descricao, dataCadastro, telefone, status, empresa, ativo }) {
   try {
-    return await Vaga.create({ titulo, descricao, dataCadastro, telefone, status, empresa });
+    return await Vaga.create({ titulo, descricao, dataCadastro, telefone, status, empresa, ativo });
   } catch (error) {
     throw new Error('Error creating job: ' + error.message);
   }
 }
 
-async function update(id, { titulo, descricao, dataCadastro, telefone, status, empresa }) {
+async function update(id, { titulo, descricao, dataCadastro, telefone, status, empresa, ativo }) {
   try {
-    const vaga = await vaga.findByPk(id);
+    const vaga = await Vaga.findByPk(id);
     if (vaga) {
       vaga.titulo = titulo;
       vaga.descricao = descricao;
@@ -34,6 +34,7 @@ async function update(id, { titulo, descricao, dataCadastro, telefone, status, e
       vaga.telefone = telefone;
       vaga.status = status;
       vaga.empresa = empresa;
+      vaga.ativo = ativo;
       await vaga.save();
       return vaga;
     }

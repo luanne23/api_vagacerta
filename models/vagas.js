@@ -23,9 +23,10 @@ const Vaga = sequelize.define('Vagas', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  status: {
-    type: DataTypes.STRING,
+  ativo: {
+    type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: true
   },
   empresa: {
     type: DataTypes.STRING,
