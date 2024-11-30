@@ -14,12 +14,16 @@ Este projeto é uma API RESTful criada com Node.js, Express e Sequelize que impl
 
 - `server.js` - Arquivo principal da aplicação que inicia o servidor.
 - `config/database.js` - Configuração do Sequelize e do banco de dados SQLite.
-- `routes/usuarios.js` - Rotas para o CRUD de Usuários e login.
+- `routes/usuarios.js` - Rotas para o CRUD de Usuários.
 - `routes/vagas.js` - Rotas para o CRUD de Vagas.
 
 ## Instalação
 
 1. Clone o repositório:
+   ```bash
+   git clone https://github.com/JefersonQueiroga/api-express.git
+   ```
+
 2. Instale as dependências:
    ```bash
    npm install
@@ -44,7 +48,7 @@ O servidor estará rodando em `http://localhost:3000`.
 - **GET /api/usuarios/:id** - Retorna um usuário específico.
 - **PUT /api/usuarios/:id** - Atualiza as informações de um usuário.
 - **DELETE /api/usuarios/:id** - Deleta um usuário.
-- **POST /api/usuarios/login** - Login do usuario
+
 #### Vagas
 
 - **GET /api/vagas** - Lista todas as vagas.

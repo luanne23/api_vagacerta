@@ -1,59 +1,96 @@
 const express = require('express');
 const router = express.Router();
 const usuarioRepository = require('../repositories/usuarioRepository');
-
-// Get all users
-router.get('/', (req, res) => {
-  res.json({ usuarios: usuarioRepository.findAll() });
+router.get('/', async (req, res) => {
+  try {
+    const user = await usuarioRepository.findAll();
+    console.log(user);
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Get user by id
-router.get('/:id', (req, res) => {
-  const user = usuarioRepository.findById(req.params.id);
-  if (user) {
-    res.json({ user });
-  } else {
-    res.status(404).json({ error: 'User not found' });
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await usuarioRepository.findById(req.params.id);
+    if (user) {
+      res.json({ user });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
 // Create a new user
-router.post('/', (req, res) => {
-  const user = usuarioRepository.create(req.body);
-  res.json({ user });
+router.post('/', async (req, res) => {
+  try {
+    const user = await usuarioRepository.create(req.body);
+    res.json({ user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Update a user
-router.put('/:id', (req, res) => {
-  const user = usuarioRepository.update(req.params.id, req.body);
-  if (user) {
-    res.json({ user });
-  } else {
-    res.status(404).json({ error: 'User not found' });
+router.put('/:id', async (req, res) => {
+  try {
+    const user = await usuarioRepository.update(req.params.id, req.body);
+    if (user) {
+      res.json({ user });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
 // Delete a user
-router.delete('/:id', (req, res) => {
-  const user = usuarioRepository.remove(req.params.id);
+router.delete('/:id', async (req, res) => {
+  try{
+  const user = await usuarioRepository.remove(req.params.id);
   if (user) {
     res.json({ user });
   } else {
     res.status(404).json({ error: 'User not found' });
   }
+}catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
-// Login route
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, senha } = req.body;
 
-  // Find user by email
-  const user = usuarioRepository.findByEmail(email);
+  try {
+    
+    const usuario = await usuarioRepository.findByEmail(email);
+    console.log(usuario);
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
 
-  if (!user || user.senha !== senha) {
-    return res.status(401).json({ error: 'Senha ou usuario inválido!' });
+    // Verifica se a senha está correta
+    if (usuario.senha !=  senha) {
+      return res.status(401).json({ message: 'Senha incorreta.' });
+    }
+    // Login bem-sucedido
+    return res.status(200).json({
+      message: 'Login realizado com sucesso.',
+      usuario: {
+        id: usuario.id,
+        nome: usuario.nome,
+        email: usuario.email,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Erro interno no servidor.' });
   }
-  res.json({ message: 'Login Reealizado com sucesso!', user });
 });
 
 module.exports = router;

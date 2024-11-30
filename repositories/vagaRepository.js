@@ -1,4 +1,4 @@
-const Vaga = require('../models/vaga');
+const Vaga = require('../models/vagas');
 
 async function findAll() {
   try {

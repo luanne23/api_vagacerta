@@ -1,12 +1,22 @@
-const Usuario = require('../models/usuario');
+const Usuario = require('../models/usuarios');
 
 async function findAll() {
-  return await Usuario.findAll();
+  try {
+    return await Usuario.findAll();
+  } catch (error) {
+    throw new Error('Error fetching all usuario: ' + error.message);
+  }
 }
 
 async function findById(id) {
   return await Usuario.findByPk(id);
 }
+
+async function findByEmail(email) {
+  
+  return await Usuario.findOne({where: {email}});
+}
+
 
 async function create({ nome, email, senha }) {
   return await Usuario.create({ nome, email, senha });
@@ -41,4 +51,5 @@ module.exports = {
   create,
   update,
   remove,
+  findByEmail
 };
