@@ -21,7 +21,7 @@ Este projeto é uma API RESTful criada com Node.js, Express e Sequelize que impl
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/JefersonQueiroga/api-express.git
+   git clone https://github.com/luanne23/api_vagacerta.git
    ```
 
 2. Instale as dependências:
@@ -48,6 +48,7 @@ O servidor estará rodando em `http://localhost:3000`.
 - **GET /api/usuarios/:id** - Retorna um usuário específico.
 - **PUT /api/usuarios/:id** - Atualiza as informações de um usuário.
 - **DELETE /api/usuarios/:id** - Deleta um usuário.
+- **POST /api/usuarios/login** - Login de um usuário.
 
 #### Vagas
 
